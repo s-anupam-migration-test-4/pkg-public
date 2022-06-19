@@ -1,0 +1,35 @@
+name: npm install
+on:
+  push: 
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        token: ['${GITHUB_TOKEN}']
+        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:           
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: 16
+          registry-url: https://npm.pkg.github.com
+          token: ${{ matrix.token }}
+
+      - name: setup-npmrc
+        id: setup-npmrc
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ matrix.token }}" > .npmrc
+
+      - name: npm install
+        if: always()
+        run: |
+          npm install @s-anupam-migration-test-4/{{ matrix.pkg }}

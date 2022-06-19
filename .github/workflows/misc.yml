@@ -1,0 +1,46 @@
+name: npm-new-pkg-private-misc
+on:
+  push:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        token: ['${GITHUB_TOKEN}' ]
+        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
+
+    env:
+      org: ${{ github.repository_owner }}
+      curl_custom_flags: "--fail"
+      GITHUB_API_BASE_URL: https://api.github.com
+      GITHUB_APIV4_BASE_URL: https://api.github.com/graphql
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:         
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: 16
+          registry-url: https://npm.pkg.github.com
+          token: ${{ matrix.token }}
+
+      - name: setup-npmrc
+        id: setup-npmrc
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ matrix.token }}" > .npmrc
+
+      - name: npm view new
+        if: always()
+        run: |
+          npm view @s-anupam-migration-test-4/${{ matrix.pkg }} --registry=https://npm.pkg.github.com
+
+      - name: npm dist-tags
+        if: always()
+        run: |
+          npm dist-tag add @s-anupam-migration-test-4/${{ matrix.pkg }}@1.0.0 "first version" --registry=https://npm.pkg.github.com
+          npm dist-tag ls @s-anupam-migration-test-4/${{ matrix.pkg }} --registry=https://npm.pkg.github.com
+          npm dist-tag rm @s-anupam-migration-test-4/${{ matrix.pkg }}@1.0.0 "first version" --registry=https://npm.pkg.github.com
