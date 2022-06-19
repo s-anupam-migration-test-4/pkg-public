@@ -32,4 +32,4 @@ jobs:
       - name: npm install
         if: always()
         run: |
-          npm install @s-anupam-migration-test-4/{{ matrix.pkg }}
+          npm install @s-anupam-migration-test-4/${{ matrix.pkg }}
