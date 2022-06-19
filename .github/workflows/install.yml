@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         token: ['${GITHUB_TOKEN}']
-        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
+        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','pkg-pvt-3','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

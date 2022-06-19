@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         token: ['${GITHUB_TOKEN}' ]
-        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
+        pkg: ['v1-pkg-pvt','v1-pkg-pvt-2','pkg-pvt-3','v1-pkg-int','v1-pkg-int-2','v1-pkg-pub','v1-pkg-pub-2']
 
     env:
       org: ${{ github.repository_owner }}
@@ -37,6 +37,11 @@ jobs:
         if: always()
         run: |
           npm view @s-anupam-migration-test-4/${{ matrix.pkg }} --registry=https://npm.pkg.github.com
+
+      - name: npm dist-tags ls
+        if: always()
+        run: |
+          npm dist-tag ls @s-anupam-migration-test-4/${{ matrix.pkg }} --registry=https://npm.pkg.github.com
 
       - name: npm dist-tags
         if: always()
