@@ -1,0 +1,19 @@
+{
+  "name": "@s-anupam-migration-test-4/v1-pkg-pub",
+  "version": "3.0.0",
+  "description": "mayhem",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-anupam-migration-test-4/pkg-public.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-anupam-migration-test-4/pkg-public/issues"
+  },
+  "homepage": "https://github.com/s-anupam-migration-test-4/pkg-public#readme"
+}
