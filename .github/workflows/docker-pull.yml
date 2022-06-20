@@ -38,4 +38,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: download image
-        run: docker pull ${{ env.REGISTRY }}/${{ github.GITHUB_REPOSITORY_OWNER }}/nats:latest
+        run: docker pull ghcr.io/s-anupam-migration-test-4/nats:latest
